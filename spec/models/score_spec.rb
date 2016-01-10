@@ -85,23 +85,14 @@ describe Score, type: :model do
     end
   end
 
-  describe '#result' do
-    it 'is the difference between both scored' do
-      subject.attributes = { score: 19, opponent_score: 21 }
-      expect(subject.result).to eq(-2)
-    end
-  end
+  describe '#results' do
+    let(:john) { User.new }
+    let(:paul) { User.new }
 
-  describe '#is_winner?' do
-    it 'is true' do
-      subject.attributes = { score: 21, opponent_score: 18 }
-      expect(subject.is_winner?).to eq(true)
-    end
-
-    it 'is false' do
-      subject.attributes = { score: 19, opponent_score: 21 }
-      expect(subject.is_winner?).to eq(false)
-
+    it 'returns results based on the caller' do
+      subject.attributes = { created_by: john, opponent: paul, score: 21, opponent_score: 19}
+      expect(subject.results(john)).to eq({adversary: paul, score: 21, opponent_score: 19, is_winner: true})
+      expect(subject.results(paul)).to eq({adversary: john, score: 19, opponent_score: 21, is_winner: false})
     end
   end
 end

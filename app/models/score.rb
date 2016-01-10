@@ -9,12 +9,12 @@ class Score < ActiveRecord::Base
   validate  :must_not_be_in_the_future
   validate  :must_have_valid_scores
 
-  def result
-    score - opponent_score
-  end
-
-  def is_winner?
-    result > 0
+  def results(me)
+    if created_by == me
+      { adversary: opponent, score: score, opponent_score: opponent_score, is_winner: score - opponent_score > 0 }
+    else
+      { adversary: created_by, score: opponent_score, opponent_score: score, is_winner: opponent_score - score > 0 }
+    end
   end
 
   protected
