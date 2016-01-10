@@ -1,6 +1,9 @@
 class ScoresController < ApplicationController
   before_action :authenticate_user!
 
+  def index
+  end
+  
   def new
     @score = current_user.scores.build
   end

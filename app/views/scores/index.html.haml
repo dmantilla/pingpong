@@ -1,0 +1,19 @@
+%h1 History
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th Date
+      %th Opponent
+      %th Score
+      %th Result
+
+  - current_user.scores.each do |score|
+    %tr
+      %td= score.date_played
+      %td= score.opponent.name
+      %td
+        = score.score
+        \-
+        = score.opponent_score
+      %td= score.is_winner? ? 'W' : 'L'
