@@ -1,0 +1,24 @@
+- if @score.errors.any?
+  .row
+    .col-lg-12.bg-danger
+      - @score.errors.each do |k, err|
+        %p
+          = k.to_s.humanize unless k == :base
+          = err
+
+%h1 New Score
+
+= form_for @score do |f|
+  .form-group
+    %label Date Played
+    = f.date_select :date_played
+  .form-group
+    %label Opponent
+    = f.collection_select :opponent_id, current_user.opponents, :id, :name
+  .form-group
+    %label Your Score
+    = f.number_field :score
+  .form-group
+    %label Their Score
+    = f.number_field :opponent_score
+  = f.submit 'Save'
