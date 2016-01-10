@@ -84,4 +84,24 @@ describe Score, type: :model do
       end
     end
   end
+
+  describe '#result' do
+    it 'is the difference between both scored' do
+      subject.attributes = { score: 19, opponent_score: 21 }
+      expect(subject.result).to eq(-2)
+    end
+  end
+
+  describe '#is_winner?' do
+    it 'is true' do
+      subject.attributes = { score: 21, opponent_score: 18 }
+      expect(subject.is_winner?).to eq(true)
+    end
+
+    it 'is false' do
+      subject.attributes = { score: 19, opponent_score: 21 }
+      expect(subject.is_winner?).to eq(false)
+
+    end
+  end
 end

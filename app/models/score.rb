@@ -9,6 +9,14 @@ class Score < ActiveRecord::Base
   validate  :must_not_be_in_the_future
   validate  :must_have_valid_scores
 
+  def result
+    score - opponent_score
+  end
+
+  def is_winner?
+    result > 0
+  end
+
   protected
 
   def must_not_be_in_the_future
