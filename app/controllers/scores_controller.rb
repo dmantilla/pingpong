@@ -12,7 +12,7 @@ class ScoresController < ApplicationController
   def create
     @score = current_user.scores.build(score_params)
     if @score.save
-      redirect_to root_path
+      redirect_to action: :index
     else
       render action: :new
     end
