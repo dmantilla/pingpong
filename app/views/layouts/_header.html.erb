@@ -15,7 +15,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <% if user_signed_in? %>
-          <li><%= link_to 'Leaderboard', root_path %></li>
+          <li><%= link_to 'Leaderboard', leaderboard_path %></li>
           <li><%= link_to 'Register Score', new_score_path %></li>
         <% end %>
       </ul>
