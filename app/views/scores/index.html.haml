@@ -8,12 +8,13 @@
       %th Score
       %th Result
 
-  - current_user.scores.each do |score|
+  - @history.each do |score|
     %tr
       %td= score.date_played
-      %td= score.opponent.name
+      - r = score.results(current_user)
+      %td= r[:adversary].name
       %td
-        = score.score
+        = r[:score]
         \-
-        = score.opponent_score
-      %td= score.is_winner? ? 'W' : 'L'
+        = r[:opponent_score]
+      %td= r[:is_winner] ? 'W' : 'L'

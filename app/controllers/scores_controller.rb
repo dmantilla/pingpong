@@ -2,8 +2,9 @@ class ScoresController < ApplicationController
   before_action :authenticate_user!
 
   def index
+    @history = current_user.score_history.sort_by { |s| s.date_played }
   end
-  
+
   def new
     @score = current_user.scores.build
   end
