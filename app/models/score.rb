@@ -9,6 +9,8 @@ class Score < ActiveRecord::Base
   validate  :must_not_be_in_the_future
   validate  :must_have_valid_scores
 
+  after_save :rank
+
   def results(me)
     if created_by == me
       { adversary: opponent, score: score, opponent_score: opponent_score, is_winner: score - opponent_score > 0 }
@@ -37,4 +39,7 @@ class Score < ActiveRecord::Base
     errors.add(:base, 'There has to be a difference of at least 2 points between scores') if (score - opponent_score).abs < 2
   end
 
+  def rank
+    RankManager.process(self)
+  end
 end
