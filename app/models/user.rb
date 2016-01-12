@@ -4,7 +4,17 @@ class User < ActiveRecord::Base
   has_many :scores, foreign_key: 'created_by_id'
   has_many :opponent_scores, foreign_key: 'opponent_id', class_name: 'Score'
 
-  scope    :by_final_score, -> { order(score: :desc) }
+  scope    :by_desc_points, -> { order(points: :desc) }
+
+  def increment_points!(value)
+    self.points += value
+    save!
+  end
+
+  def increment_games_played!
+    self.games_played += 1
+    save!
+  end
 
   def opponents
     User.where.not(id: self.id)
