@@ -17,6 +17,14 @@ class Score < ActiveRecord::Base
     end
   end
 
+  def winner
+    (score - opponent_score) > 0 ? created_by : opponent
+  end
+
+  def loser
+    ([created_by, opponent] - [winner]).first
+  end
+
   protected
 
   def must_not_be_in_the_future
@@ -28,4 +36,5 @@ class Score < ActiveRecord::Base
     errors.add(:base, 'One of the scores has to be 21') unless (score == 21 && opponent_score != 21) || (score != 21 && opponent_score == 21)
     errors.add(:base, 'There has to be a difference of at least 2 points between scores') if (score - opponent_score).abs < 2
   end
+
 end

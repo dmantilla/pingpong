@@ -2,6 +2,8 @@ require 'rails_helper'
 
 describe Score, type: :model do
   let(:today) { Date.parse('2016-01-01') }
+  let(:john)  { User.new(name: 'john' ) }
+  let(:paul)  { User.new(name: 'paul' ) }
 
   context 'associations' do
     it { expect(subject).to belong_to(:created_by).class_name('User') }
@@ -86,13 +88,24 @@ describe Score, type: :model do
   end
 
   describe '#results' do
-    let(:john) { User.new }
-    let(:paul) { User.new }
-
     it 'returns results based on the caller' do
       subject.attributes = { created_by: john, opponent: paul, score: 21, opponent_score: 19}
       expect(subject.results(john)).to eq({adversary: paul, score: 21, opponent_score: 19, is_winner: true})
       expect(subject.results(paul)).to eq({adversary: john, score: 19, opponent_score: 21, is_winner: false})
+    end
+  end
+
+  describe '#winner & #loser' do
+    it 'returns the winner' do
+      subject.attributes = { created_by: john, opponent: paul, score: 21, opponent_score: 19}
+      expect(subject.winner).to eq(john)
+      expect(subject.loser).to eq(paul)
+    end
+
+    it 'returns the winner again' do
+      subject.attributes = { created_by: john, opponent: paul, score: 15, opponent_score: 21}
+      expect(subject.winner).to eq(paul)
+      expect(subject.loser).to eq(john)
     end
   end
 end
