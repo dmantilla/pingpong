@@ -5,12 +5,12 @@
     %tr
       %th Rank
       %th Name
-      %th Score
+      %th Points
       %th Games Played
 
-  - User.by_final_score.each_with_index do |user, idx|
+  - User.by_desc_points.each_with_index do |user, idx|
     %tr
       %td= idx + 1
       %td= user.name
-      %td= user.score
+      %td= user.points
       %td= user.games_played
